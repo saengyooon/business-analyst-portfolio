@@ -1,2 +1,22 @@
-# business-analyst-portfolio
-Portfolio of a Business Analyst. Contains examples of requirements documentation, data analysis cases, and process modeling
+# ? Привет, я Арина!
+
+## ? О себе
+Начинающий аналитик. Специализируюсь на анализе данных, автоматизации отчетности и проектировании БД.
+## ? Текущие проекты
+- **Автоматизация отчетности и система мониторинга KPI** — спроектировала базу данных PostgreSQL и разработала интерактивные дашборды в аналитической системе Power BI. 
+- **Анализ депозитных продуктов Сбербанка** — очистка и трансформация данных в Power Query, построение аналитической модели в Power BI.
+- **Технический анализ и администрирование Astra Linux** — работа в командной строке Bash, анализ клиент-серверной архитектуры и тестирование информационных систем.
+
+## ? Технический стек
+- SQL (PostgreSQL, JOIN, оконные функции, агрегация)
+- Python (Pandas, NumPy)
+- Power BI, Pix BI
+- MS Excel, Word, Visio, PowerPoint
+- Astra Linux (Bash, администрирование)
+- BPMN 2.0, UML
+- Visual Studio, Jupyter Notebook
+
+## ? Контакты
+- Email: arinamkhitaryan@gmail.com
+- Telegram: @saengyooon
+- Tilda: https://arina-analytics.tilda.ws/page153355156.html

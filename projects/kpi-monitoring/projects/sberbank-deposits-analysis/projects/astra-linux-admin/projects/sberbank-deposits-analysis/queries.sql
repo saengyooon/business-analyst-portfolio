@@ -1,56 +1,47 @@
--- ============================================
--- Анализ депозитных продуктов Сбербанка
--- Автор: Арина
--- ============================================
+select
+    product_name,
+    count(*) as total_accounts,
+    sum(balance) as total_balance,
+    avg(interest_rate) as avg_rate,
+    min(open_date) as first_deposit,
+    max(open_date) as last_deposit
+from deposits
+where status = 'active'
+group by product_name
+order by total_balance desc;
 
--- 1. Общая статистика по активным депозитам
-SELECT 
-    product_name AS "Название продукта",
-    COUNT(*) AS "Количество счетов",
-    SUM(balance) AS "Общий баланс",
-    AVG(interest_rate) AS "Средняя ставка %",
-    MIN(open_date) AS "Первый депозит",
-    MAX(open_date) AS "Последний депозит"
-FROM deposits
-WHERE status = 'active'
-GROUP BY product_name
-ORDER BY SUM(balance) DESC;
+select
+    date_trunc('month', transaction_date) as month,
+    sum(case when transaction_type = 'deposit' then amount else 0 end) as inflow,
+    sum(case when transaction_type = 'withdrawal' then amount else 0 end) as outflow,
+    sum(case
+        when transaction_type = 'deposit' then amount
+        else -amount
+    end) as net_flow
+from deposit_transactions
+where transaction_date >= '2024-01-01'
+group by date_trunc('month', transaction_date)
+order by month;
 
--- 2. KPI: Приток и отток средств по месяцам
-SELECT 
-    DATE_TRUNC('month', transaction_date) AS "Месяц",
-    SUM(CASE WHEN transaction_type = 'deposit' THEN amount ELSE 0 END) AS "Приток",
-    SUM(CASE WHEN transaction_type = 'withdrawal' THEN amount ELSE 0 END) AS "Отток",
-    SUM(CASE 
-        WHEN transaction_type = 'deposit' THEN amount 
-        ELSE -amount 
-    END) AS "Чистый поток"
-FROM deposit_transactions
-WHERE transaction_date >= '2024-01-01'
-GROUP BY DATE_TRUNC('month', transaction_date)
-ORDER BY "Месяц";
+select
+    client_id,
+    count(*) as num_deposits,
+    sum(balance) as total_balance,
+    avg(balance) as avg_balance
+from deposits
+group by client_id
+having sum(balance) > 100000
+order by total_balance desc
+limit 10;
 
--- 3. Топ-10 клиентов по объёму депозитов
-SELECT 
-    client_id AS "ID клиента",
-    COUNT(*) AS "Кол-во депозитов",
-    SUM(balance) AS "Общий баланс",
-    AVG(balance) AS "Средний баланс"
-FROM deposits
-GROUP BY client_id
-HAVING SUM(balance) > 100000
-ORDER BY SUM(balance) DESC
-LIMIT 10;
-
--- 4. Анализ доходности продуктов
-SELECT 
-    product_name AS "Продукт",
-    SUM(balance * interest_rate / 100) AS "Годовой доход",
-    AVG(CASE 
-        WHEN maturity_date IS NOT NULL 
-        THEN balance * interest_rate / 100 
-    END) AS "Средний доход по продукту"
-FROM deposits
-WHERE status = 'active'
-GROUP BY product_name
-ORDER BY "Годовой доход" DESC;
+select
+    product_name,
+    sum(balance * interest_rate / 100) as yearly_income,
+    avg(case
+        when maturity_date is not null
+        then balance * interest_rate / 100
+    end) as avg_income
+from deposits
+where status = 'active'
+group by product_name
+order by yearly_income desc

@@ -62,5 +62,4 @@
 
 - Email: arinamkhitaryan@gmail.com
 - Telegram: @saengyooon
-- Tilda: https://arina-analytics.tilda.ws
-
+- Tilda: https://arina-analytics.tilda.ws/page153355156.html
